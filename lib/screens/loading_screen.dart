@@ -6,7 +6,16 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
- void getlocation() async {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getlocation();
+
+  }
+
+  void getlocation() async {
    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   print(position);
  }
