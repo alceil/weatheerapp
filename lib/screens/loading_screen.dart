@@ -1,4 +1,5 @@
 import 'package:clima/services/location.dart';
+import 'package:clima/services/weather.dart';
 import 'package:flutter/material.dart';
 import 'location_screen.dart'
 
@@ -15,6 +16,7 @@ LocationScreen{ths.locationWeather}
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
+  WeatherModel weather=WeatherModel();
   int temperature ;
   int condition ;
   String Cityname;
@@ -31,8 +33,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void updateUI(dynamic weatherData){
      double temp = decodedData['main']['temp'];
      temperature = temp.toint();
-     condition = decodedData['weather'][0]['id'];
+    var  condition = decodedData['weather'][0]['id'];
     Cityname = decodedData['name'];
+    Weathericon=weather.getWeatherIcon(condition);
 
   }
 
