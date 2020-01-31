@@ -1,7 +1,7 @@
 import 'package:clima/services/location.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'location_screen.dart'
+
 const apiKey='b0b429eedb42a54045f4ae96b69898da';
 
 class LoadingScreen extends StatefulWidget {
@@ -19,7 +19,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     // TODO: implement initState
     super.initState();
     getlocation();
-    getData();
+
 
   }
 
@@ -28,26 +28,15 @@ class _LoadingScreenState extends State<LoadingScreen> {
     await location.getcurrentlocation();
     latitude = location.latitude;
     longitude = location.longitude;
-    getData();
- }
- void getData() async{
-      http.Response response = await http.get('https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey'),
-    if(response.statuscode==200)
-   {
-   String data=response.body;
-   var decodedData = jsonDecode(data);
-   double temperature = decodedData['main']['temp'];
-   int condition = decodedData['weather'][0]['id'];
-   String Cityname = decodedData['name'];
-   print('temperature');
-   print('condition');
-   print('Cityname');
-   }
-   else
-     {
-       print(response.statuscode)
-     }
-   }
+    NetworkHelper networkhelper=NetworkHelper('https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey');
+    var weatherdata = await networkHelper.getdata()
+    Navigator.push(context,MaterialPageRoute{
+      builder:(context){
+        return locationScreen();
+    }));
+
+  }
+
 
  }
 
@@ -57,6 +46,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
     getData();
     return Scaffold(
       body: Center(
+        child:SpinKitRotatingCircle(
+          color: Colors.white,
+          size: 50.0,
+        );
         child: RaisedButton(
           onPressed: () {
             //Get the current location
@@ -67,3 +60,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
     );
   }
 }
+//double temperature = decodedData['main']['temp'];
+//int condition = decodedData['weather'][0]['id'];
+//String Cityname = decodedData['name'];
