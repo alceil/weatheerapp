@@ -34,7 +34,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
         temperature=0;
         WeatherIcon='error';
         Weathermessage = "Unable to get weather Data"
-
+        cityname='';
+        return;
       }
      double temp = decodedData['main']['temp'];
     var temperature = temp.toint();

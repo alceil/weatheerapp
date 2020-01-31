@@ -33,7 +33,19 @@ class _CityScreenState extends State<CityScreen> {
               ),
               Container(
                 padding: EdgeInsets.all(20.0),
-                child: null,
+                child: Textfield(
+                  decoration :inputdecoration(
+                    filled:True,
+                    fillcolor:colors.white,
+
+                  )
+                      Icon(
+                    Icons.location
+                    color:colors.white,
+                )
+                  hinttext:'Enteryour name'
+
+                ),
               ),
               FlatButton(
                 onPressed: () {},
