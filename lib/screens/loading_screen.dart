@@ -5,12 +5,19 @@ import 'location_screen.dart'
 const apiKey='b0b429eedb42a54045f4ae96b69898da';
 
 class LoadingScreen extends StatefulWidget {
+LocationScreen{ths.locationWeather}
+
+  final locationWeather;
+
+
   @override
   _LoadingScreenState createState() => _LoadingScreenState();
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
-
+  int temperature ;
+  int condition ;
+  String Cityname;
 
   double latitude;
   double longitude;
@@ -18,21 +25,25 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getlocation();
+    updateUI(widget.locationWeather);
+  }
 
+  void updateUI(dynamic weatherData){
+     double temp = decodedData['main']['temp'];
+     temperature = temp.toint();
+     condition = decodedData['weather'][0]['id'];
+    Cityname = decodedData['name'];
 
   }
 
   void getlocation() async {
     Location location = location();
     await location.getcurrentlocation();
-    latitude = location.latitude;
-    longitude = location.longitude;
-    NetworkHelper networkhelper=NetworkHelper('https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey');
+    NetworkHelper networkhelper=NetworkHelper('https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=$apiKey&units=metric');
     var weatherdata = await networkHelper.getdata()
     Navigator.push(context,MaterialPageRoute{
       builder:(context){
-        return locationScreen();
+        return locationScreen(locationWeather:weatherdata,);
     }));
 
   }
@@ -60,6 +71,3 @@ class _LoadingScreenState extends State<LoadingScreen> {
     );
   }
 }
-//double temperature = decodedData['main']['temp'];
-//int condition = decodedData['weather'][0]['id'];
-//String Cityname = decodedData['name'];
