@@ -1,9 +1,5 @@
-import 'package:clima/services/location.dart';
-import 'package:clima/services/weather.dart';
 import 'package:flutter/material.dart';
 import 'location_screen.dart'
-
-const apiKey='b0b429eedb42a54045f4ae96b69898da';
 
 class LoadingScreen extends StatefulWidget {
 LocationScreen{ths.locationWeather}
@@ -33,7 +29,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void updateUI(dynamic weatherData){
     setState(() {
 
+    if (weatherData == null)
+      {
+        temperature=0;
+        WeatherIcon='error';
+        Weathermessage = "Unable to get weather Data"
 
+      }
      double temp = decodedData['main']['temp'];
     var temperature = temp.toint();
     var  condition = decodedData['weather'][0]['id'];
@@ -44,10 +46,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   void getlocation() async {
-    Location location = location();
-    await location.getcurrentlocation();
-    NetworkHelper networkhelper=NetworkHelper('https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=$apiKey&units=metric');
-    var weatherdata = await networkHelper.getdata()
+    var weatherdata =  await weathermodel().getlocationWeather();
     Navigator.push(context,MaterialPageRoute{
       builder:(context){
         return locationScreen(locationWeather:weatherdata,);
