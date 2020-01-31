@@ -7,6 +7,11 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
+  int temperature;
+  String weatherIcon;
+  String cityName;
+  String Weathermessage;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +58,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       style: kTempTextStyle,
                     ),
                     Text(
-                      '☀️',
+                      Weathericon,
                       style: kConditionTextStyle,
                     ),
                   ],
@@ -62,7 +67,7 @@ class _LocationScreenState extends State<LocationScreen> {
               Padding(
                 padding: EdgeInsets.only(right: 15.0),
                 child: Text(
-                  "It's 🍦 time in San Francisco!",
+                  "$Weathermessage in $cityName!",
                   textAlign: TextAlign.right,
                   style: kMessageTextStyle,
                 ),

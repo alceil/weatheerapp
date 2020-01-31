@@ -31,12 +31,16 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   void updateUI(dynamic weatherData){
+    setState(() {
+
+
      double temp = decodedData['main']['temp'];
-     temperature = temp.toint();
+    var temperature = temp.toint();
     var  condition = decodedData['weather'][0]['id'];
     Cityname = decodedData['name'];
     Weathericon=weather.getWeatherIcon(condition);
-
+     Weathermessage=weather.getWeathermessage(temperature);
+    });
   }
 
   void getlocation() async {
